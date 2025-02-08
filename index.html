@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering Notes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+            transition: background 2s;
+        }
+        .hidden {
+            display: none;
+        }
+        #icfoss-check {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 20vh;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            transition: 0.3s;
+        }
+        .yes-btn {
+            background-color: #ff1a75;
+            color: white;
+            font-size: 2em;
+            padding: 20px 50px;
+            border-radius: 50px;
+            box-shadow: 0 0 20px rgba(255, 26, 117, 0.8);
+        }
+        .no-btn {
+            background-color: grey;
+            color: white;
+            font-size: 0.8em;
+            padding: 10px 20px;
+            border-radius: 15px;
+        }
+        .valentine-mode {
+            background: linear-gradient(45deg, #ff4d79, #ff80bf);
+        }
+        .romantic-text {
+            font-size: 3em;
+            color: #ff0040;
+            font-weight: bold;
+            display: none;
+            animation: fadeIn 2s forwards;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .heart-shower {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 30px;
+            opacity: 0.8;
+            animation: fall linear infinite, glow 2s infinite alternate;
+        }
+        @keyframes fall {
+            0% { top: -10%; opacity: 0; transform: rotate(0deg) scale(1); }
+            50% { opacity: 1; }
+            100% { top: 110%; opacity: 0; transform: rotate(360deg) scale(1.5); }
+        }
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px #ff4d4d; }
+            100% { text-shadow: 0 0 30px #ff1a1a; }
+        }
+    </style>
+</head>
+<body>
+    <div id="icfoss-check">ICFOSS?
+        <div class="button-container">
+            <button class="yes-btn" onclick="safeMode()">Yes</button>
+            <button class="no-btn" onclick="activateValentineMode()">No</button>
+        </div>
+    </div>
+    <div id="no-network" class="hidden">No network. Connect when the coast is clear.</div>
+    <div id="romantic-container" class="hidden">
+        <div id="hi-ammachy" class="romantic-text">Hi Ammachy 💕</div>
+        <div id="special-text" class="romantic-text">I have something special to ask you... 💌</div>
+        <div id="question-text" class="romantic-text hidden">
+            <span>Will</span>
+            <span>You</span>
+            <span>Be</span>
+            <span>My</span>
+            <span>Valentine?</span>
+        </div>
+        <div class="button-container hidden" id="valentine-buttons">
+            <button class="yes-btn" onclick="acceptLove()">❤️ Yes ❤️</button>
+            <button class="no-btn" onclick="rejectLove()">No</button>
+        </div>
+    </div>
+    <div class="heart-shower" id="hearts"></div>
+    <script>
+        function safeMode() {
+            document.getElementById('icfoss-check').style.display = 'none';
+            document.getElementById('no-network').classList.remove('hidden');
+        }
+        function activateValentineMode() {
+            document.body.classList.add('valentine-mode');
+            document.getElementById('icfoss-check').style.display = 'none';
+            document.getElementById('romantic-container').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('hi-ammachy').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('hi-ammachy').style.display = 'none';
+                    document.getElementById('special-text').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('special-text').style.display = 'none';
+                        document.getElementById('question-text').classList.remove('hidden');
+                        setTimeout(() => {
+                            document.getElementById('valentine-buttons').classList.remove('hidden');
+                        }, 3000);
+                    }, 3000);
+                }, 3000);
+            }, 1000);
+        }
+        function acceptLove() {
+            document.getElementById('romantic-container').style.display = 'none';
+            createHearts();
+        }
+        function rejectLove() {
+            alert("Poor network. Reply 'Yes' to reconnect our hearts.");
+        }
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            heartsContainer.innerHTML = '';
+            for (let i = 0; i < 100; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+                heart.innerHTML = '💖';
+                heartsContainer.appendChild(heart);
+            }
+        }
+    </script>
+</body>
+</html>
